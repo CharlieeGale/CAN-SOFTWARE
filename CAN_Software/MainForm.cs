@@ -11,6 +11,7 @@ using System.Threading;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Data.SqlClient;
 
 
 
@@ -25,9 +26,14 @@ namespace CAN_Software
 		List<string> focusedIDs = new List<string>();
 		List<string> dataList = new List<string>();
 		
+
+		SqlConnection connection = new SqlConnection(@"Data Source=localhost;Initial Catalog=master;Integrated Security=True");
+
+
 		string tempFile = Path.GetTempFileName();
-		
+
 		bool SerialPortPendingClose = false;
+
 		public CANAnalyser()
 		{
 			InitializeComponent();
@@ -36,6 +42,7 @@ namespace CAN_Software
 			fillMakeBox();
 			closeButton.Enabled = false;
 			pauseButton.Enabled = false;
+			
 		}
 
 		System.Windows.Forms.Timer tm;
@@ -45,19 +52,36 @@ namespace CAN_Software
 
 			serialPort.DataReceived += new SerialDataReceivedEventHandler(port_DataReceived);
 		}
-		public void fillMakeBox()
+		public void fillMakeBox() // used to populate the Make Box of the car builder.
 		{
-			string[] makes = new string[] { "Abarth		 ", "Acura		 ", "Alfa Romeo	 ", "Alpine		 ", "Audi		 ", "Austin		 ", "Bentley		 ", "Brabus		 ", "Bugatti		 ", "Cadilliac	 ", "Chevrolet	 ", "Chrystler	 ", "Citroen		 ", "CUPRA		 ", "Dacia		 ", "Daewoo		 ", "Daihatsu	 ", "Datsun		 ", "DeLorean	 ", "Dodge		 ", "Ferrari		 ", "Fiat		 ", "Ford		 ", "Honda		 ", "Hummer		 ", "Hyundia		 ", "Infiniti	 ", "Isuzu		 ", "Iveco		 ", "Jaguar		 ", "Jeep		 ", "Kia			 ", "Koenigsegg	 ", "Lamborghini	 ", "Lancia		 ", "Land Rover	 ", "Lexus		 ", "Lotus		 ", "Lucid		 ", "Maserati	 ", "Mazda		 ", "McLaren		 ", "Mercedes	 ", "Mercedes-Benz", "Micro		  ", "MINI		  ", "Mitsubishi	  ", "Nissan		  ", "Noble		  ", "Opel		  ", "Pagani		  ", "Peugeot		  ", "Plymouth	  ", "Polestar	  ", "Pontiac		  ", "Porsche		  ", "Reliant		  ", "Renault		  ", "Rimac		  ", "Rolls-Royce	  ", "Rover		  ", "RUF			  ", "Saab		  ", "Scion		  ", "SEAT		  ", "Skoda		  ", "Smart		  ", "SsangYong	  ", "Subaru		  ", "Tesla		  ", "Toyota		  ", "Triumph		  ", "TVR			  ", "Vauxhall	  ", "Volkswagen	  ", "Volvo"}
-			path = Path.Combine(Directory.GetCurrentDirectory(), "\\MakeList.txt");
-			string[] lineOfContents = File.ReadAllLines(path);
-			foreach (var line in lineOfContents)
+			connection.Open(); // opens connection to the database
+			List<String> makes =new List<string>();
+			string makesQuery = "SELECT makeName from makes"; //creates an sql query to execute
+			using (SqlCommand makesSearch = new SqlCommand(makesQuery, connection))
 			{
-				string[] tokens = line.Split(',');
-				makeSelection.Items.Add(tokens[0]);
+				SqlDataReader myReader = makesSearch.ExecuteReader();
+				while (myReader.Read()) // loops to add all values read to a list.
+				{
+					makes.Add(myReader["makeName"].ToString());
+				}
 			}
+			while (makeSelection.SelectedItem != null)
+			{
+				List<String> filteredMakes = new List<string>();
+				string searchMakesQuery = $"Select makeName from makes WHERE makeName LIKE {makeSelection.SelectedItem} %";
+				using (SqlCommand searchMakeSearch = new SqlCommand(searchMakesQuery, connection))
+				{
+					SqlDataReader myReaderFilter = searchMakeSearch.ExecuteReader();
 
+					while (myReaderFilter.Read())
+					{
+						filteredMakes.Add(myReaderFilter["MakeName"].ToString());
+					}
+					makes = filteredMakes;
+				}
 
-
+			}
+			makeSelection.DataSource = makes;
 
 		}
 
@@ -68,15 +92,18 @@ namespace CAN_Software
 		}
 		public void focusIDs()
 		{
-			foreach(var focusID in focusedIDs)
+
+			foreach (var focusID in focusedIDs)
 			{
+				
+				
 				dataList.RemoveAll(x => !x.Contains(focusID));
+
 				
 			}
 
-
+			
 		}
-		
 		public void filterIDs()
 	{
 			//HashSet<string> toRemove = new HashSet<string>(File.ReadLines("FILTERIDS.txt"));
@@ -134,7 +161,7 @@ namespace CAN_Software
 
 	
 			private void port_DataReceived(object sender,
-								 SerialDataReceivedEventArgs e) //reads and displays serialport data
+						 SerialDataReceivedEventArgs e) //reads and displays serialport data
 		{
 			if (!SerialPortPendingClose)
 			{
@@ -397,7 +424,16 @@ System.Windows.Forms.KeyPressEventHandler(CheckEnterFocus);
 
 		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-
+			
+		/*	foreach(var make in makes)
+			{
+				if (!(make.StartsWith(makeSelection.Text)))
+				{
+					makes.Prepend(make);
+				}	
+			}*/
+			
+			
 		}
 	}
 

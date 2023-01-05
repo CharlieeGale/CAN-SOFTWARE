@@ -84,42 +84,42 @@ namespace CAN_Software
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 30);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
 			this.fileToolStripMenuItem.Text = "File";
 			this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
 			// 
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-			this.editToolStripMenuItem.Size = new System.Drawing.Size(58, 30);
+			this.editToolStripMenuItem.Size = new System.Drawing.Size(58, 32);
 			this.editToolStripMenuItem.Text = "Edit";
 			this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
 			// 
 			// viewToolStripMenuItem
 			// 
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-			this.viewToolStripMenuItem.Size = new System.Drawing.Size(65, 30);
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(65, 32);
 			this.viewToolStripMenuItem.Text = "View";
 			this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
 			// 
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 30);
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 32);
 			this.toolsToolStripMenuItem.Text = "Tools";
 			this.toolsToolStripMenuItem.Click += new System.EventHandler(this.toolsToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 30);
+			this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 32);
 			this.helpToolStripMenuItem.Text = "Help";
 			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(78, 30);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(78, 32);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -170,7 +170,6 @@ namespace CAN_Software
 			// 
 			// baudSelect
 			// 
-			this.baudSelect.FormattingEnabled = true;
 			this.baudSelect.Location = new System.Drawing.Point(500, 74);
 			this.baudSelect.Name = "baudSelect";
 			this.baudSelect.Size = new System.Drawing.Size(121, 28);
@@ -285,7 +284,7 @@ namespace CAN_Software
 			this.debuggerTab.Location = new System.Drawing.Point(4, 29);
 			this.debuggerTab.Name = "debuggerTab";
 			this.debuggerTab.Padding = new System.Windows.Forms.Padding(3);
-			this.debuggerTab.Size = new System.Drawing.Size(939, 635);
+			this.debuggerTab.Size = new System.Drawing.Size(1495, 955);
 			this.debuggerTab.TabIndex = 1;
 			this.debuggerTab.Text = "Debugger";
 			this.debuggerTab.UseVisualStyleBackColor = true;
@@ -296,17 +295,18 @@ namespace CAN_Software
 			this.grapherTab.Location = new System.Drawing.Point(4, 29);
 			this.grapherTab.Name = "grapherTab";
 			this.grapherTab.Padding = new System.Windows.Forms.Padding(3);
-			this.grapherTab.Size = new System.Drawing.Size(939, 635);
+			this.grapherTab.Size = new System.Drawing.Size(1495, 955);
 			this.grapherTab.TabIndex = 2;
 			this.grapherTab.Text = "Grapher";
 			this.grapherTab.UseVisualStyleBackColor = true;
 			// 
 			// makeSelection
 			// 
+			this.makeSelection.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.makeSelection.FormattingEnabled = true;
-			this.makeSelection.Location = new System.Drawing.Point(1749, 87);
+			this.makeSelection.Location = new System.Drawing.Point(1673, 87);
 			this.makeSelection.Name = "makeSelection";
-			this.makeSelection.Size = new System.Drawing.Size(121, 28);
+			this.makeSelection.Size = new System.Drawing.Size(213, 28);
 			this.makeSelection.TabIndex = 15;
 			this.makeSelection.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
 			// 
